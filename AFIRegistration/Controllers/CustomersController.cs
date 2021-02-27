@@ -16,11 +16,20 @@ namespace AFIRegistration.Controllers
         }
 
         // POST: api/Customers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<int>> PostCustomer(Customer customer)
+        public async Task<ActionResult<int>> PostCustomer(CustomerDTO customerDTO)
         {
+            var customer = new Customer
+            {
+                FirstName = customerDTO.FirstName,
+                Surname = customerDTO.Surname,
+                PolicyNumber = customerDTO.PolicyNumber,
+                DateOfBirth = customerDTO.DateOfBirth,
+                EmailAddress = customerDTO.EmailAddress
+            };
+
             await _context.Customers.AddAsync(customer);
+
             await _context.SaveChangesAsync();
 
             return Ok(customer.CustomerId);
