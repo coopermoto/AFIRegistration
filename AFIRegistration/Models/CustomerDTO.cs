@@ -22,8 +22,8 @@ namespace AFIRegistration.Models
         public const int FirstNameMaxLength = 50;
         public const int SurnameMinLength = 3;
         public const int SurnameMaxLength = 50;
-        public const string PolicyNumberFormat = @"[A-Z]{2}-\d{6}";
-        public const string EmailAddressFormat = @"\w{4,}@\w{2,}(?:.com|.co.uk)";
+        public const string PolicyNumberFormat = @"^[A-Z]{2}-\d{6}$";
+        public const string EmailAddressFormat = @"^\w{4,}@\w{2,}(?:.com|.co.uk)$";
 
         public CustomerDTOValidator()
         {
@@ -36,7 +36,7 @@ namespace AFIRegistration.Models
             RuleFor(x => x.Surname)
                 .NotNull()
                     .WithMessage("Surname is required")
-                .Length(SurnameMinLength)
+                .Length(SurnameMinLength, SurnameMaxLength)
                     .WithMessage($"Surname should be between {SurnameMinLength} and {SurnameMaxLength} characters");
 
             RuleFor(x => x.PolicyNumber)
