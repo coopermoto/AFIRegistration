@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AFIRegistration", "AFIRegistration\AFIRegistration.csproj", "{BF93170D-504E-4483-B203-D28BAE0ACED6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFIRegistration.Test", "AFIRegistration.Test\AFIRegistration.Test.csproj", "{CEAF54F5-A5EC-44C9-91C7-4C5BE8AD7259}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AFIRegistration.Test", "AFIRegistration.Test\AFIRegistration.Test.csproj", "{CEAF54F5-A5EC-44C9-91C7-4C5BE8AD7259}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50BDE2D1-1471-410D-95C2-36448F6B68A0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
