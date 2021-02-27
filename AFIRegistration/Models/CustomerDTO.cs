@@ -23,7 +23,7 @@ namespace AFIRegistration.Models
         public const int SurnameMinLength = 3;
         public const int SurnameMaxLength = 50;
         public const string PolicyNumberFormat = @"^[A-Z]{2}-\d{6}$";
-        public const string EmailAddressFormat = @"^\w{4,}@\w{2,}(?:.com|.co.uk)$";
+        public const string EmailAddressFormat = @"^[a-zA-Z0-9]{4,}@[a-zA-Z0-9]{2,}(?:.com|.co.uk)$";
 
         public CustomerDTOValidator()
         {
