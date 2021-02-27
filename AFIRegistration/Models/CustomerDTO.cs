@@ -33,9 +33,11 @@ namespace AFIRegistration.Models
                 .Matches(@"[A-Z]{2}-\d{6}").WithMessage("Policy Number is not valid");
 
             RuleFor(x => x.DateOfBirth)
+                .NotNull().When(x => x.EmailAddress == null).WithMessage("Either Date of Birth or Email Address is required")
                 .LessThanOrEqualTo(DateTime.Now.AddYears(-18)).WithMessage("Customer must be at least 18");
 
             RuleFor(x => x.EmailAddress)
+                .NotNull().When(x => x.DateOfBirth == null).WithMessage("Either Email Address or Date of Birth is required")
                 .Matches(@"\w{4,}@\w{2,}(?:.com|.co.uk)").WithMessage("Email Address is not valid");
         }
     }
