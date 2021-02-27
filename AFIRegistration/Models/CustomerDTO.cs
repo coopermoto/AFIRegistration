@@ -23,6 +23,7 @@ namespace AFIRegistration.Models
         public const int SurnameMinLength = 3;
         public const int SurnameMaxLength = 50;
         public const string PolicyNumberFormat = @"^[A-Z]{2}-\d{6}$";
+        public const int MinimumAgeInYears = 18;
         public const string EmailAddressFormat = @"^[a-zA-Z0-9]{4,}@[a-zA-Z0-9]{2,}(?:.com|.co.uk)$";
 
         public CustomerDTOValidator()
@@ -48,8 +49,8 @@ namespace AFIRegistration.Models
             RuleFor(x => x.DateOfBirth)
                 .NotNull().When(x => x.EmailAddress == null)
                     .WithMessage("Either Date of Birth or Email Address is required")
-                .LessThanOrEqualTo(DateTime.Now.AddYears(-18))
-                    .WithMessage("Customer must be at least 18");
+                .LessThanOrEqualTo(DateTime.Now.AddYears(-MinimumAgeInYears))
+                    .WithMessage($"Customer must be at least {MinimumAgeInYears}");
 
             RuleFor(x => x.EmailAddress)
                 .NotNull().When(x => x.DateOfBirth == null)

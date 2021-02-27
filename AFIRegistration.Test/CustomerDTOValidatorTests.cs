@@ -8,12 +8,44 @@ namespace AFIRegistration.Test
     [TestFixture]
     public class CustomerDTOValidatorTests
     {
-        private CustomerDTOValidator validator;
+        private CustomerDTOValidator _validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new CustomerDTOValidator();
+            _validator = new CustomerDTOValidator();
+        }
+
+        [Test]
+        public void Should_have_no_errors_when_valid()
+        {
+            var model = new CustomerDTO
+            {
+                FirstName = "Rob",
+                Surname = "Carson",
+                PolicyNumber = "AF-123456",
+                EmailAddress = "robcarson@animalfriends.co.uk"
+            };
+
+            var result = _validator.TestValidate(model);
+
+            Assert.IsTrue(result.IsValid);
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        [Test]
+        public void Should_have_errors_on_all_properties_when_empty()
+        {
+            var model = new CustomerDTO();
+
+            var result = _validator.TestValidate(model);
+
+            Assert.IsFalse(result.IsValid);
+            result.ShouldHaveValidationErrorFor(x => x.FirstName);
+            result.ShouldHaveValidationErrorFor(x => x.Surname);
+            result.ShouldHaveValidationErrorFor(x => x.PolicyNumber);
+            result.ShouldHaveValidationErrorFor(x => x.DateOfBirth);
+            result.ShouldHaveValidationErrorFor(x => x.EmailAddress);
         }
 
         [Test]
@@ -21,7 +53,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {FirstName = null};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result
                 .ShouldHaveValidationErrorFor(x => x.FirstName)
@@ -36,7 +68,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {FirstName = firstName};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldHaveValidationErrorFor(x => x.FirstName)
                 .WithErrorMessage("First Name should be between 3 and 50 characters");
@@ -49,7 +81,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {FirstName = firstName};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldNotHaveValidationErrorFor(x => x.FirstName);
         }
@@ -59,7 +91,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {Surname = null};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result
                 .ShouldHaveValidationErrorFor(x => x.Surname)
@@ -74,7 +106,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {Surname = surname};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldHaveValidationErrorFor(x => x.Surname)
                 .WithErrorMessage("Surname should be between 3 and 50 characters");
@@ -87,7 +119,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {Surname = surname};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldNotHaveValidationErrorFor(x => x.Surname);
         }
@@ -97,7 +129,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {PolicyNumber = null};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result
                 .ShouldHaveValidationErrorFor(x => x.PolicyNumber)
@@ -118,7 +150,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {PolicyNumber = policyNumber};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldHaveValidationErrorFor(x => x.PolicyNumber)
                 .WithErrorMessage("Policy Number is not valid");
@@ -132,7 +164,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {PolicyNumber = policyNumber};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldNotHaveValidationErrorFor(x => x.PolicyNumber);
         }
@@ -146,7 +178,7 @@ namespace AFIRegistration.Test
                 EmailAddress = null
             };
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result
                 .ShouldHaveValidationErrorFor(x => x.DateOfBirth)
@@ -166,7 +198,7 @@ namespace AFIRegistration.Test
                 EmailAddress = "robcarson@afi.co.uk"
             };
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldNotHaveValidationErrorFor(x => x.DateOfBirth);
         }
@@ -180,7 +212,7 @@ namespace AFIRegistration.Test
                 EmailAddress = null
             };
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             result.ShouldNotHaveValidationErrorFor(x => x.EmailAddress);
         }
@@ -207,7 +239,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {DateOfBirth = testData.DateOfBirth};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             if (testData.ExpectedResult)
             {
@@ -240,7 +272,7 @@ namespace AFIRegistration.Test
         {
             var model = new CustomerDTO {EmailAddress = emailAddress};
 
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             if (expectedResult)
             {
