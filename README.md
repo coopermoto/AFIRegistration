@@ -52,3 +52,6 @@ First the Customer model was added along with a simple Entity Framework DB Conte
 After removing the endpoints that were not needed for this exercise and modifying the POST endpoint to return Customer Id, I implemented model validation using [Fluent Validation](https://fluentvalidation.net/) and added corresponding unit tests.
 
 I would normally add tests for controllers but in this case the single endpoint is as simple as you could imagine so have omitted them.  I would also normally add a repository pattern for data access but again omitted this for simplicity.
+
+### A satisfied customer
+![A satisfied customer](Henry.jpg "Henry Cooper")
