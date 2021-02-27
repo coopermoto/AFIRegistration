@@ -6,6 +6,6 @@ namespace AFIRegistration.Models
     {
         public int CustomerId { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }
