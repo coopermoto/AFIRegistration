@@ -1,21 +1,8 @@
 ﻿using FluentValidation;
 using System;
 
-namespace AFIRegistration.Models
+namespace AFIRegistration.Data.Models
 {
-    public class CustomerDTO
-    {
-        public string FirstName { get; set; }
-
-        public string Surname { get; set; }
-
-        public string PolicyNumber { get; set; }
-
-        public DateTime? DateOfBirth { get; set; }
-
-        public string EmailAddress { get; set; }
-    }
-
     public class CustomerDTOValidator : AbstractValidator<CustomerDTO>
     {
         public const int FirstNameMinLength = 3;
@@ -30,33 +17,33 @@ namespace AFIRegistration.Models
         {
             RuleFor(x => x.FirstName)
                 .NotNull()
-                    .WithMessage("First Name is required")
+                .WithMessage("First Name is required")
                 .Length(FirstNameMinLength, FirstNameMaxLength)
-                    .WithMessage($"First Name should be between {FirstNameMinLength} and {FirstNameMaxLength} characters");
+                .WithMessage($"First Name should be between {FirstNameMinLength} and {FirstNameMaxLength} characters");
 
             RuleFor(x => x.Surname)
                 .NotNull()
-                    .WithMessage("Surname is required")
+                .WithMessage("Surname is required")
                 .Length(SurnameMinLength, SurnameMaxLength)
-                    .WithMessage($"Surname should be between {SurnameMinLength} and {SurnameMaxLength} characters");
+                .WithMessage($"Surname should be between {SurnameMinLength} and {SurnameMaxLength} characters");
 
             RuleFor(x => x.PolicyNumber)
                 .NotNull()
-                    .WithMessage("Policy Number is required")
+                .WithMessage("Policy Number is required")
                 .Matches(PolicyNumberFormat)
-                    .WithMessage("Policy Number is not valid");
+                .WithMessage("Policy Number is not valid");
 
             RuleFor(x => x.DateOfBirth)
                 .NotNull().When(x => x.EmailAddress == null)
-                    .WithMessage("Either Date of Birth or Email Address is required")
+                .WithMessage("Either Date of Birth or Email Address is required")
                 .LessThanOrEqualTo(DateTime.Now.AddYears(-MinimumAgeInYears))
-                    .WithMessage($"Customer must be at least {MinimumAgeInYears}");
+                .WithMessage($"Customer must be at least {MinimumAgeInYears}");
 
             RuleFor(x => x.EmailAddress)
                 .NotNull().When(x => x.DateOfBirth == null)
-                    .WithMessage("Either Email Address or Date of Birth is required")
+                .WithMessage("Either Email Address or Date of Birth is required")
                 .Matches(EmailAddressFormat)
-                    .WithMessage("Email Address is not valid");
+                .WithMessage("Email Address is not valid");
         }
     }
 }

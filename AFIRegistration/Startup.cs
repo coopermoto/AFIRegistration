@@ -1,4 +1,7 @@
-using AFIRegistration.Models;
+using AFIRegistration.Data.Models;
+using AFIRegistration.Data.Repositories;
+using AFIRegistration.Service.Services;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 namespace AFIRegistration
 {
@@ -27,7 +29,12 @@ namespace AFIRegistration
                 opt.UseInMemoryDatabase("CustomerList"));
 
             services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+                .AddFluentValidation();
+
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IValidator<CustomerDTO>, CustomerDTOValidator>();
 
             services.AddSwaggerGen(c =>
             {

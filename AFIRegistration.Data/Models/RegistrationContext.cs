@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AFIRegistration.Models
+namespace AFIRegistration.Data.Models
 {
     public class RegistrationContext : DbContext
     {

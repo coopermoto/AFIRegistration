@@ -1,22 +1,23 @@
-﻿using AFIRegistration.Models;
+﻿using AFIRegistration.Data.Models;
 using FluentValidation.TestHelper;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
-namespace AFIRegistration.Test
+namespace AFIRegistration.Data.Test.Models
 {
-    [TestFixture]
+    [TestClass]
     public class CustomerDTOValidatorTests
     {
         private CustomerDTOValidator _validator;
 
-        [SetUp]
-        public void Setup()
+        [TestInitialize]
+        public void TestInitialise()
         {
             _validator = new CustomerDTOValidator();
         }
-
-        [Test]
+         
+        [TestMethod]
         public void Should_have_no_errors_when_valid()
         {
             var model = new CustomerDTO
@@ -33,7 +34,7 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveAnyValidationErrors();
         }
 
-        [Test]
+        [TestMethod]
         public void Should_have_errors_on_all_properties_when_empty()
         {
             var model = new CustomerDTO();
@@ -48,7 +49,7 @@ namespace AFIRegistration.Test
             result.ShouldHaveValidationErrorFor(x => x.EmailAddress);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_have_error_when_FirstName_missing()
         {
             var model = new CustomerDTO {FirstName = null};
@@ -60,10 +61,11 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("First Name is required");
         }
 
-        [TestCase("")]
-        [TestCase("a")]
-        [TestCase("aa")]
-        [TestCase("1234567890123456789012345678901234567890123456789012")]
+        [DataTestMethod]
+        [DataRow("")]
+        [DataRow("a")]
+        [DataRow("aa")]
+        [DataRow("1234567890123456789012345678901234567890123456789012")]
         public void Should_have_error_when_FirstName_invalid(string firstName)
         {
             var model = new CustomerDTO {FirstName = firstName};
@@ -74,9 +76,10 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("First Name should be between 3 and 50 characters");
         }
 
-        [TestCase("Rob")]
-        [TestCase("Scott")]
-        [TestCase("12345678901234567890123456789012345678901234567890")]
+        [DataTestMethod]
+        [DataRow("Rob")]
+        [DataRow("Scott")]
+        [DataRow("12345678901234567890123456789012345678901234567890")]
         public void Should_not_have_error_when_FirstName_valid(string firstName)
         {
             var model = new CustomerDTO {FirstName = firstName};
@@ -86,7 +89,7 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveValidationErrorFor(x => x.FirstName);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_have_error_when_Surname_missing()
         {
             var model = new CustomerDTO {Surname = null};
@@ -98,10 +101,11 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("Surname is required");
         }
 
-        [TestCase("")]
-        [TestCase("a")]
-        [TestCase("aa")]
-        [TestCase("1234567890123456789012345678901234567890123456789012")]
+        [DataTestMethod]
+        [DataRow("")]
+        [DataRow("a")]
+        [DataRow("aa")]
+        [DataRow("1234567890123456789012345678901234567890123456789012")]
         public void Should_have_error_when_Surname_invalid(string surname)
         {
             var model = new CustomerDTO {Surname = surname};
@@ -112,9 +116,10 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("Surname should be between 3 and 50 characters");
         }
 
-        [TestCase("Carson")]
-        [TestCase("Rickman")]
-        [TestCase("12345678901234567890123456789012345678901234567890")]
+        [DataTestMethod]
+        [DataRow("Carson")]
+        [DataRow("Rickman")]
+        [DataRow("12345678901234567890123456789012345678901234567890")]
         public void Should_not_have_error_when_Surname_valid(string surname)
         {
             var model = new CustomerDTO {Surname = surname};
@@ -124,7 +129,7 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveValidationErrorFor(x => x.Surname);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_have_error_when_PolicyNumber_missing()
         {
             var model = new CustomerDTO {PolicyNumber = null};
@@ -136,16 +141,17 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("Policy Number is required");
         }
 
-        [TestCase("")]
-        [TestCase("a")]
-        [TestCase("aa")]
-        [TestCase("aa-123456")]
-        [TestCase("99-123456")]
-        [TestCase("AA-12345")]
-        [TestCase("AA-1234567")]
-        [TestCase("AA-AAAAAA")]
-        [TestCase("AA 123456")]
-        [TestCase("AA_123456")]
+        [DataTestMethod]
+        [DataRow("")]
+        [DataRow("a")]
+        [DataRow("aa")]
+        [DataRow("aa-123456")]
+        [DataRow("99-123456")]
+        [DataRow("AA-12345")]
+        [DataRow("AA-1234567")]
+        [DataRow("AA-AAAAAA")]
+        [DataRow("AA 123456")]
+        [DataRow("AA_123456")]
         public void Should_have_error_when_PolicyNumber_invalid(string policyNumber)
         {
             var model = new CustomerDTO {PolicyNumber = policyNumber};
@@ -156,10 +162,11 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("Policy Number is not valid");
         }
 
-        [TestCase("AZ-123456")]
-        [TestCase("ZA-654321")]
-        [TestCase("AA-000000")]
-        [TestCase("ZZ-999999")]
+        [DataTestMethod]
+        [DataRow("AZ-123456")]
+        [DataRow("ZA-654321")]
+        [DataRow("AA-000000")]
+        [DataRow("ZZ-999999")]
         public void Should_not_have_error_when_PolicyNumber_valid(string policyNumber)
         {
             var model = new CustomerDTO {PolicyNumber = policyNumber};
@@ -169,7 +176,7 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveValidationErrorFor(x => x.PolicyNumber);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_have_error_when_DateOfBirth_and_EmailAddress_missing()
         {
             var model = new CustomerDTO
@@ -189,7 +196,7 @@ namespace AFIRegistration.Test
                 .WithErrorMessage("Either Email Address or Date of Birth is required");
         }
 
-        [Test]
+        [TestMethod]
         public void Should_not_have_error_on_DateOfBirth_when_EmailAddress_present()
         {
             var model = new CustomerDTO
@@ -203,7 +210,7 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveValidationErrorFor(x => x.DateOfBirth);
         }
 
-        [Test]
+        [TestMethod]
         public void Should_not_have_error_on_EmailAddress_when_DateOfBirth_present()
         {
             var model = new CustomerDTO
@@ -217,31 +224,15 @@ namespace AFIRegistration.Test
             result.ShouldNotHaveValidationErrorFor(x => x.EmailAddress);
         }
 
-        public class DateOfBirthTestData
+        [DataTestMethod]
+        [DynamicData(nameof(GetDateOfBirthTestData), DynamicDataSourceType.Method)]
+        public void Should_validate_DateOfBirth_when_present(DateTime dateOfBirth, bool expectedResult)
         {
-            public DateTime DateOfBirth{ get; init; }
-            public bool ExpectedResult{ get; init; }
-        }
-
-        private static DateOfBirthTestData[] _dateOfBirthTestData =
-        {
-            new() {DateOfBirth = DateTime.Now, ExpectedResult = false},
-            new() {DateOfBirth = DateTime.Now.AddYears(18), ExpectedResult = false},
-            new() {DateOfBirth = DateTime.Now.AddYears(-17), ExpectedResult = false},
-            new() {DateOfBirth = DateTime.Now.AddYears(-18).AddSeconds(1), ExpectedResult = false},
-            new() {DateOfBirth = DateTime.Now.AddYears(-18), ExpectedResult = true},
-            new() {DateOfBirth = DateTime.Now.AddYears(-50), ExpectedResult = true},
-            new() {DateOfBirth = DateTime.Now.AddYears(-99), ExpectedResult = true},
-        };
-
-        [Test]
-        public void Should_validate_DateOfBirth_when_present([ValueSource(nameof(_dateOfBirthTestData))]DateOfBirthTestData testData)
-        {
-            var model = new CustomerDTO {DateOfBirth = testData.DateOfBirth};
+            var model = new CustomerDTO {DateOfBirth = dateOfBirth};
 
             var result = _validator.TestValidate(model);
 
-            if (testData.ExpectedResult)
+            if (expectedResult)
             {
                 result.ShouldNotHaveValidationErrorFor(x => x.DateOfBirth);
             }
@@ -253,21 +244,22 @@ namespace AFIRegistration.Test
             }
         }
 
-        [TestCase("aaa@a.com", false)]
-        [TestCase("aaaa@a.com", false)]
-        [TestCase("aaa@aa.com", false)]
-        [TestCase("aaaa@aa.com", true)]
-        [TestCase("111@1.com", false)]
-        [TestCase("1111@1.com", false)]
-        [TestCase("111@11.com", false)]
-        [TestCase("1111@11.com", true)]
-        [TestCase("aaaa@aa.net", false)]
-        [TestCase("aaaa@aa.co.uk", true)]
-        [TestCase("aaaaaaaaaaaaaaaaaaaa@aaaaaaaaaaaaaaaaaaaa.com", true)]
-        [TestCase("robcarson@afi.com", true)]
-        [TestCase("scottrickman@afi.com", true)]
-        [TestCase("rob.carson@afi.com", false)]
-        [TestCase("scott_rickman@afi.com", false)]
+        [DataTestMethod]
+        [DataRow("aaa@a.com", false)]
+        [DataRow("aaaa@a.com", false)]
+        [DataRow("aaa@aa.com", false)]
+        [DataRow("aaaa@aa.com", true)]
+        [DataRow("111@1.com", false)]
+        [DataRow("1111@1.com", false)]
+        [DataRow("111@11.com", false)]
+        [DataRow("1111@11.com", true)]
+        [DataRow("aaaa@aa.net", false)]
+        [DataRow("aaaa@aa.co.uk", true)]
+        [DataRow("aaaaaaaaaaaaaaaaaaaa@aaaaaaaaaaaaaaaaaaaa.com", true)]
+        [DataRow("robcarson@afi.com", true)]
+        [DataRow("scottrickman@afi.com", true)]
+        [DataRow("rob.carson@afi.com", false)]
+        [DataRow("scott_rickman@afi.com", false)]
         public void Should_validate_EmailAddress_when_present(string emailAddress, bool expectedResult)
         {
             var model = new CustomerDTO {EmailAddress = emailAddress};
@@ -284,6 +276,17 @@ namespace AFIRegistration.Test
                     .ShouldHaveValidationErrorFor(x => x.EmailAddress)
                     .WithErrorMessage("Email Address is not valid");
             }
+        }
+
+        private static IEnumerable<object[]> GetDateOfBirthTestData()
+        {
+            yield return new object[] {DateTime.Now, false};
+            yield return new object[] {DateTime.Now.AddYears(18), false};
+            yield return new object[] {DateTime.Now.AddYears(-17), false};
+            yield return new object[] {DateTime.Now.AddYears(-18).AddSeconds(1), false};
+            yield return new object[] {DateTime.Now.AddYears(-18), true};
+            yield return new object[] {DateTime.Now.AddYears(-50), true};
+            yield return new object[] {DateTime.Now.AddYears(-99), true};
         }
     }
 }

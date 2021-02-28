@@ -1,4 +1,5 @@
-﻿using AFIRegistration.Models;
+﻿using AFIRegistration.Data.Models;
+using AFIRegistration.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,11 +9,11 @@ namespace AFIRegistration.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly RegistrationContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(RegistrationContext context)
+        public CustomersController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         // POST: api/Customers
@@ -28,9 +29,7 @@ namespace AFIRegistration.Controllers
                 EmailAddress = customerDTO.EmailAddress
             };
 
-            await _context.Customers.AddAsync(customer);
-
-            await _context.SaveChangesAsync();
+            await _customerService.AddCustomerAsync(customer);
 
             return Ok(customer.CustomerId);
         }
