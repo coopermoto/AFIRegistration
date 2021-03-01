@@ -1,5 +1,20 @@
 # AFIRegistration
-## Animal Friends Insurance Registration API
+### My Solution
+This is an ASP.NET Core Web API project using .NET 5 which represents my solution to the [Animal Friends Insurance Registration API](#requirements) technical challenge.
+
+First the Customer model was added along with a simple Entity Framework DB Context which persists data to an in memory store.  Then a CustomersController was scaffolded using these objects which gave me a full impementation of basic asctions for the Customer entity.
+
+After removing the endpoints that were not needed for this exercise and modifying the POST endpoint to return Customer Id, I implemented model validation using [Fluent Validation](https://fluentvalidation.net/) and added corresponding unit tests.
+
+<del>I would normally add tests for controllers but in this case the single endpoint is as simple as you could imagine so have omitted them.  I would also normally add a repository pattern for data access but again omitted this for simplicity.</del>
+
+On Sunday I got a little carried away with the [feature/implement_repository_pattern](https://github.com/coopermoto/AFIRegistration/tree/feature/implement_repository_pattern) branch :O
+
+### A satisfied customer
+![A satisfied customer](Henry.jpg "Henry Cooper")
+___
+
+## <a name="requirements"></a>Animal Friends Insurance Registration API
 Animal Friends Insurance (AFI) requires a new REST API to allow customers to register for the AFI
 customer portal. _(Note: this product is purely fictious and this exercise is only going to be used as
 part of a technical test.)_
@@ -43,17 +58,3 @@ approximately 2-3 hours. Your application to the role could still be successful 
 incomplete solution.
 
 Following this technical test, you will be expected to discuss your solution with developers at AFI.
-___
-### My Solution
-This is an ASP.NET Core Web API project using .NET 5.
-
-First the Customer model was added along with a simple Entity Framework DB Context which persists data to an in memory store.  Then a CustomersController was scaffolded using these objects which gave me a full impementation of basic asctions for the Customer entity.
-
-After removing the endpoints that were not needed for this exercise and modifying the POST endpoint to return Customer Id, I implemented model validation using [Fluent Validation](https://fluentvalidation.net/) and added corresponding unit tests.
-
-<del>I would normally add tests for controllers but in this case the single endpoint is as simple as you could imagine so have omitted them.  I would also normally add a repository pattern for data access but again omitted this for simplicity.</del>
-
-Got a little carried away and with the [feature/implement_repository_pattern](https://github.com/coopermoto/AFIRegistration/tree/feature/implement_repository_pattern) branch :O
-
-### A satisfied customer
-![A satisfied customer](Henry.jpg "Henry Cooper")
